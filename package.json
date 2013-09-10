@@ -1,0 +1,35 @@
+{
+  "name": "tao",
+  "version": "0.0.1",
+  "logo": "http://ww4.sinaimg.cn/large/61ff0de3gw1e8hjxtgfbaj201e01da9u.jpg",
+  "description": "a tiny and smart tracking system for node.js app",
+  "main": "index.js",
+  "author": "turing",
+  "license": "MIT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/turingou/Tao.git"
+  },
+  "bugs": {
+    "url": "https://github.com/turingou/Tao/issues"
+  },
+  "keywords": [
+    "tao",
+    "zen",
+    "tracker",
+    "track"
+  ],
+  "dependencies": {
+    "beer":"*",
+    "express": "3.3.1",
+    "jade": "*",
+    "less-middleware": "*"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*"
+  }
+}
