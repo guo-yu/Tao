@@ -1,21 +1,30 @@
 ## ![logo](http://ww4.sinaimg.cn/large/61ff0de3gw1e8hjxtgfbaj201e01da9u.jpg) tao ![npm](https://badge.fury.io/js/tao.png)
 
-a tiny and smart tracking system for node.js app by [turing](https://npmjs.org/~turing) 
+a simple and sexy http server for templates, inspired by [serve](https://github.com/visionmedia/serve)
 
 ### Installation
 ````
 $ npm install tao
-// or install globally
-$ sudo npm install tao -g
 ````
 
 ### Example
 ````javascript
-var tao = require('tao');
+var Tao = require('tao'),
+    tao = new Tao.server(__dirname);
+
+// set your trigger event
+tao.watch(function(file, event, stat){
+    console.log(file);
+    console.log(event);
+    console.log(stat);
+});
+
+// default port is 3001
+tao.run();
 ````
 
 ### API
-check this file: `index.js`
+check this file: `server.js`
 
 ### Contributing
 - Fork this repo
@@ -46,7 +55,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-
 
 ---
 ![docor](https://cdn1.iconfinder.com/data/icons/windows8_icons_iconpharm/26/doctor.png)

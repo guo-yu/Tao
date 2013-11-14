@@ -2,8 +2,8 @@
   "name": "tao",
   "version": "0.0.1",
   "logo": "http://ww4.sinaimg.cn/large/61ff0de3gw1e8hjxtgfbaj201e01da9u.jpg",
-  "description": "a tiny and smart tracking system for node.js app",
-  "main": "index.js",
+  "description": "a simple and sexy http server for templates",
+  "main": "server.js",
   "author": "turing",
   "license": "MIT",
   "scripts": {
@@ -23,13 +23,7 @@
     "track"
   ],
   "dependencies": {
-    "beer":"*",
-    "express": "3.3.1",
-    "jade": "*",
-    "less-middleware": "*"
-  },
-  "devDependencies": {
-    "mocha": "*",
-    "should": "*"
+    "connect": "2.3.x",
+    "watch": "*"
   }
 }
