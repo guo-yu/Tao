@@ -24,6 +24,7 @@
   ],
   "dependencies": {
     "connect": "2.3.x",
-    "watch": "*"
+    "watch": "*",
+    "socket.io": "*"
   }
 }
