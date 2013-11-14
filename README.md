@@ -10,7 +10,9 @@ $ npm install tao
 ### Example
 ````javascript
 var Tao = require('tao'),
-    tao = new Tao(__dirname);
+    tao = new Tao({
+        dir: __dirname
+    });
 
 // set your trigger event
 tao.watch(function(file, event, stat){
