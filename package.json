@@ -1,6 +1,6 @@
 {
   "name": "tao",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "logo": "http://ww4.sinaimg.cn/large/61ff0de3gw1e8hjxtgfbaj201e01da9u.jpg",
   "description": "a simple and sexy http server for templates",
   "main": "server.js",

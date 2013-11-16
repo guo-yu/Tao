@@ -30,18 +30,18 @@ Server.prototype.watch = function(callback) {
     watch.createMonitor(this.configs.dir, function(monitor) {
         monitor.on("created", function(f, stat) {
             self.emit('created', f);
-            callback(f, 'created', stat);
+            callback(f, 'created', stat, self.io);
         });
         monitor.on("changed", function(f, curr, prev) {
             self.emit('changed', f);
             callback(f, 'changed', {
                 curr: curr,
                 prev: prev
-            });
+            }, self.io);
         });
         monitor.on("removed", function(f, stat) {
             self.emit('removed', f);
-            callback(f, 'removed', stat);
+            callback(f, 'removed', stat, self.io);
         });
     });
 };
