@@ -1,7 +1,8 @@
 var fs = require('fs'),
     watch = require('watch'),
     connect = require('connect'),
-    socket = require('socket.io');
+    socket = require('socket.io'),
+    path = require('path');
 
 var Server = function(config) {
     this.configs = {};
@@ -13,7 +14,7 @@ var Server = function(config) {
     this.configs.type = config.type ? config.type : 'normal';
     this.server = connect();
     this.server.use(connect.logger(this.configs.format));
-    this.server.use(connect.static(this.configs.dir, { hidden: this.configs.hidden }));
+    this.server.use(connect.static(path.join(this.configs.dir,'/public'), { hidden: this.configs.hidden }));
     if (this.configs.type === 'list') this.server.use(connect.directory(this.configs.dir, { hidden: this.configs.hidden }));
     if (this.configs.socket) this.io = socket.listen(this.configs.port + 1);
 };
