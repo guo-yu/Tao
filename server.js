@@ -6,18 +6,23 @@ var fs = require('fs'),
 var Server = function(config) {
     this.configs = {};
     this.configs.dir = config.dir ? config.dir : __dirname;
-    this.configs.port = 3001;
+    this.configs.port = config.port && !isNaN(parseInt(config.port, 10)) ? parseInt(config.port, 10) : 3001;
     this.configs.format = 'dev';
     this.configs.hidden = false;
-    this.configs.socket = config.socket ? config.socket : true;
+    this.configs.socket = config.socket ? config.socket : false;
+    this.configs.type = config.type ? config.type : 'normal';
     this.server = connect();
     this.server.use(connect.logger(this.configs.format));
     this.server.use(connect.static(this.configs.dir, { hidden: this.configs.hidden }));
-    this.server.use(connect.directory(this.configs.dir, { hidden: this.configs.hidden }));
+    if (this.configs.type === 'list') this.server.use(connect.directory(this.configs.dir, { hidden: this.configs.hidden }));
     if (this.configs.socket) this.io = socket.listen(this.configs.port + 1);
 };
 
-Server.prototype.emit = function(key,value) {
+Server.prototype.use = function(middleware) {
+    this.server.use(middleware);
+}
+
+Server.prototype.emit = function(key, value) {
     if (this.io) {
         this.io.sockets.on('connection', function (socket) {
             socket.emit(key, value);
@@ -29,19 +34,16 @@ Server.prototype.watch = function(callback) {
     var self = this;
     watch.createMonitor(this.configs.dir, function(monitor) {
         monitor.on("created", function(f, stat) {
-            self.emit('created', f);
-            callback(f, 'created', stat, self.io);
+            callback('created', f, stat);
         });
         monitor.on("changed", function(f, curr, prev) {
-            self.emit('changed', f);
-            callback(f, 'changed', {
+            callback('changed', f, {
                 curr: curr,
                 prev: prev
-            }, self.io);
+            });
         });
         monitor.on("removed", function(f, stat) {
-            self.emit('removed', f);
-            callback(f, 'removed', stat, self.io);
+            callback('removed', f, stat);
         });
     });
 };
