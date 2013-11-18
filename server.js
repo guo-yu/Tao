@@ -5,6 +5,7 @@ var fs = require('fs'),
     path = require('path');
 
 var Server = function(config) {
+    var self = this;
     this.configs = {};
     this.configs.dir = config.dir ? config.dir : __dirname;
     this.configs.port = config.port && !isNaN(parseInt(config.port, 10)) ? parseInt(config.port, 10) : 3001;
@@ -17,6 +18,11 @@ var Server = function(config) {
     this.server.use(connect.static(path.join(this.configs.dir,'/public'), { hidden: this.configs.hidden }));
     if (this.configs.type === 'list') this.server.use(connect.directory(this.configs.dir, { hidden: this.configs.hidden }));
     if (this.configs.socket) this.io = socket.listen(this.configs.port + 1);
+    if (this.io) {
+        this.io.sockets.on('connection', function (socket) {
+            self.socket = socket;
+        });
+    }
 };
 
 Server.prototype.use = function(middleware) {
@@ -24,11 +30,7 @@ Server.prototype.use = function(middleware) {
 }
 
 Server.prototype.emit = function(key, value) {
-    if (this.io) {
-        this.io.sockets.on('connection', function (socket) {
-            socket.emit(key, value);
-        });
-    }
+    if (this.socket) this.socket.emit(key, value);
 }
 
 Server.prototype.watch = function(callback) {
